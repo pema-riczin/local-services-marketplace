@@ -1,0 +1,21 @@
+{
+  "overview": "A local services marketplace where providers list profiles and customers browse, review, and book them.",
+  "features": [
+    "Browse a searchable, filterable directory of local service providers",
+    "View full provider profiles with category, rate, location, and photo",
+    "Leave star ratings and written reviews on providers",
+    "Request bookings with a date, time, and message",
+    "Providers accept or decline incoming booking requests",
+    "Admin management panel for providers, categories, and reviews",
+    "Seeded with example providers and reviews"
+  ],
+  "category": "marketplace",
+  "tags": [
+    "marketplace",
+    "services",
+    "directory",
+    "bookings",
+    "reviews"
+  ],
+  "last_updated": "2026-11-05T22:55:04.645Z"
+}

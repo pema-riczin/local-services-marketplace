@@ -1,0 +1,150 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type BookingId__572944220 = Nat;
+type BookingRequest__371219916 =
+  {
+    createdAt : Timestamp__301639476;
+    customer : Principal;
+    id : BookingId__572944220;
+    message : Text;
+    providerId : ProviderId__856479461;
+    requestedDate : Text;
+    requestedTime : Text;
+    status : BookingStatus__866642965
+  };
+type BookingRequest__766598833 =
+  {
+    createdAt : Int;
+    customer : Principal;
+    id : Nat;
+    message : Text;
+    providerId : Nat;
+    requestedDate : Text;
+    requestedTime : Text;
+    status : BookingStatus__278555048
+  };
+type BookingStatus__278555048 = {#accepted; #declined; #pending};
+type BookingStatus__866642965 = {#accepted; #declined; #pending};
+type CategoryId__14729845 = Nat;
+type Category__159931441 = {id : Nat; name : Text};
+type Category__349932887 = {id : CategoryId__14729845; name : Text};
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type ExternalBlob__220559234 = Blob;
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__769816496 =
+  {
+    accessControlState : AccessControlState__201339279;
+    bookings : Map__230067015<Nat, BookingRequest__766598833>;
+    categories : Map__230067015<Nat, Category__159931441>;
+    providers : Map__230067015<Nat, Provider__15604161>;
+    reviews : Map__230067015<Nat, Review__1017206719>;
+    state : State__718531379
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__512397517 = {};
+type ProviderId__856479461 = Nat;
+type Provider__15604161 =
+  {
+    categoryId : Nat;
+    createdAt : Int;
+    description : Text;
+    hourlyRate : Nat;
+    id : Nat;
+    location : Text;
+    name : Text;
+    owner : Principal;
+    photo : ?Blob
+  };
+type Provider__436650321 =
+  {
+    categoryId : CategoryId__14729845;
+    createdAt : Timestamp__301639476;
+    description : Text;
+    hourlyRate : Nat;
+    id : ProviderId__856479461;
+    location : Text;
+    name : Text;
+    owner : Principal;
+    photo : ?ExternalBlob__220559234
+  };
+type ReviewId__496285678 = Nat;
+type Review__1017206719 =
+  {
+    author : Principal;
+    createdAt : Int;
+    id : Nat;
+    providerId : Nat;
+    rating : Nat;
+    text : Text
+  };
+type Review__513345496 =
+  {
+    author : Principal;
+    createdAt : Timestamp__301639476;
+    id : ReviewId__496285678;
+    providerId : ProviderId__856479461;
+    rating : Nat;
+    text : Text
+  };
+type State__718531379 =
+  {
+    var nextBookingId : Nat;
+    var nextCategoryId : Nat;
+    var nextProviderId : Nat;
+    var nextReviewId : Nat;
+    var seeded : Bool
+  };
+type Timestamp__301639476 = Int;
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "00000000_000000" : OldActor__512397517 -> NewActor__769816496
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable bookings :
+    {
+      var root :
+        Node__204828119<BookingId__572944220, BookingRequest__371219916>;
+      var size : Nat__227979830
+    };
+  stable categories :
+    {
+      var root : Node__204828119<CategoryId__14729845, Category__349932887>;
+      var size : Nat__227979830
+    };
+  stable providers :
+    {
+      var root : Node__204828119<ProviderId__856479461, Provider__436650321>;
+      var size : Nat__227979830
+    };
+  stable reviews :
+    {
+      var root : Node__204828119<ReviewId__496285678, Review__513345496>;
+      var size : Nat__227979830
+    };
+  stable state :
+    {
+      var nextBookingId : Nat;
+      var nextCategoryId : Nat;
+      var nextProviderId : Nat;
+      var nextReviewId : Nat;
+      var seeded : Bool
+    }
+};

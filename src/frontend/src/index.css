@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Fraunces", serif;
+    --font-body: "General Sans", sans-serif;
+    --font-mono: "Geist Mono", monospace;
+    --radius: 0.75rem;
+
+    /* Hearth & Ledger — warm paper light mode */
+    --background: 0.975 0.008 85;
+    --foreground: 0.24 0.02 155;
+    --card: 0.995 0.004 85;
+    --card-foreground: 0.24 0.02 155;
+    --popover: 0.995 0.004 85;
+    --popover-foreground: 0.24 0.02 155;
+
+    --primary: 0.42 0.075 162;
+    --primary-foreground: 0.98 0.008 85;
+
+    --secondary: 0.93 0.012 85;
+    --secondary-foreground: 0.3 0.025 155;
+    --muted: 0.93 0.012 85;
+    --muted-foreground: 0.5 0.018 150;
+
+    --accent: 0.66 0.13 55;
+    --accent-foreground: 0.22 0.03 55;
+
+    --destructive: 0.55 0.19 28;
+    --destructive-foreground: 0.98 0.008 85;
+
+    --success: 0.55 0.13 152;
+    --warning: 0.72 0.14 78;
+
+    --border: 0.88 0.014 82;
+    --input: 0.88 0.014 82;
+    --ring: 0.42 0.075 162;
+
+    --chart-1: 0.42 0.075 162;
+    --chart-2: 0.66 0.13 55;
+    --chart-3: 0.58 0.11 28;
+    --chart-4: 0.6 0.09 230;
+    --chart-5: 0.72 0.14 78;
+
+    --sidebar: 0.955 0.011 85;
+    --sidebar-foreground: 0.24 0.02 155;
+    --sidebar-primary: 0.42 0.075 162;
+    --sidebar-primary-foreground: 0.98 0.008 85;
+    --sidebar-accent: 0.9 0.014 85;
+    --sidebar-accent-foreground: 0.3 0.025 155;
+    --sidebar-border: 0.88 0.014 82;
+    --sidebar-ring: 0.42 0.075 162;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.46 0.08 162),
+      oklch(0.36 0.07 168)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.975 0.008 85),
+      oklch(0.955 0.012 85)
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 0.16 0.012 158;
+    --foreground: 0.93 0.008 85;
+    --card: 0.2 0.014 158;
+    --card-foreground: 0.93 0.008 85;
+    --popover: 0.2 0.014 158;
+    --popover-foreground: 0.93 0.008 85;
+
+    --primary: 0.72 0.1 162;
+    --primary-foreground: 0.16 0.012 162;
+
+    --secondary: 0.25 0.016 158;
+    --secondary-foreground: 0.85 0.008 85;
+    --muted: 0.25 0.016 158;
+    --muted-foreground: 0.62 0.012 150;
+
+    --accent: 0.74 0.13 58;
+    --accent-foreground: 0.18 0.02 58;
+
+    --destructive: 0.65 0.18 28;
+    --destructive-foreground: 0.16 0.012 28;
+
+    --success: 0.7 0.14 152;
+    --warning: 0.78 0.14 78;
+
+    --border: 0.3 0.018 158;
+    --input: 0.3 0.018 158;
+    --ring: 0.72 0.1 162;
+
+    --chart-1: 0.72 0.1 162;
+    --chart-2: 0.74 0.13 58;
+    --chart-3: 0.68 0.12 28;
+    --chart-4: 0.68 0.1 230;
+    --chart-5: 0.78 0.14 78;
+
+    --sidebar: 0.18 0.014 158;
+    --sidebar-foreground: 0.93 0.008 85;
+    --sidebar-primary: 0.72 0.1 162;
+    --sidebar-primary-foreground: 0.16 0.012 162;
+    --sidebar-accent: 0.25 0.016 158;
+    --sidebar-accent-foreground: 0.85 0.008 85;
+    --sidebar-border: 0.3 0.018 158;
+    --sidebar-ring: 0.72 0.1 162;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.68 0.1 162),
+      oklch(0.58 0.09 168)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.16 0.012 158),
+      oklch(0.2 0.014 158)
+    );
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}

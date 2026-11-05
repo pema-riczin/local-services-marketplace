@@ -1,0 +1,189 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Timestamp = int;
+type ReviewInput = 
+ record {
+   providerId: ProviderId;
+   rating: nat;
+   "text": text;
+ };
+type ReviewId = nat;
+type Review = 
+ record {
+   author: principal;
+   createdAt: Timestamp;
+   id: ReviewId;
+   providerId: ProviderId;
+   rating: nat;
+   "text": text;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type ProviderView = 
+ record {
+   averageRating: float64;
+   categoryId: CategoryId;
+   createdAt: Timestamp;
+   description: text;
+   hourlyRate: nat;
+   id: ProviderId;
+   location: text;
+   name: text;
+   owner: principal;
+   photo: opt ExternalBlob;
+   reviewCount: nat;
+ };
+type ProviderInput = 
+ record {
+   categoryId: CategoryId;
+   description: text;
+   hourlyRate: nat;
+   location: text;
+   name: text;
+   photo: opt ExternalBlob;
+ };
+type ProviderId = nat;
+type ProviderFilter = 
+ record {
+   categoryId: opt CategoryId;
+   location: opt text;
+   search: opt text;
+ };
+type ExternalBlob = blob;
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type CategoryId = nat;
+type Category = 
+ record {
+   id: CategoryId;
+   name: text;
+ };
+type BookingStatus = 
+ variant {
+   accepted;
+   declined;
+   pending;
+ };
+type BookingRequest = 
+ record {
+   createdAt: Timestamp;
+   customer: principal;
+   id: BookingId;
+   message: text;
+   providerId: ProviderId;
+   requestedDate: text;
+   requestedTime: text;
+   status: BookingStatus;
+ };
+type BookingInput = 
+ record {
+   message: text;
+   providerId: ProviderId;
+   requestedDate: text;
+   requestedTime: text;
+ };
+type BookingId = nat;
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  acceptBooking: (id: BookingId) -> (opt BookingRequest);
+  addReview: (input: ReviewInput) -> (Review);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createBooking: (input: BookingInput) -> (BookingRequest);
+  createCategory: (name: text) -> (Category);
+  createMyProvider: (input: ProviderInput) -> (ProviderView);
+  createProvider: (input: ProviderInput) -> (ProviderView);
+  declineBooking: (id: BookingId) -> (opt BookingRequest);
+  deleteCategory: (id: CategoryId) -> (bool);
+  deleteMyProvider: () -> (bool);
+  deleteProvider: (id: ProviderId) -> (bool);
+  deleteReview: (id: ReviewId) -> (bool);
+  execute: (qJson: text) -> (Result) query;
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getMyProvider: () -> (opt ProviderView) query;
+  getProvider: (id: ProviderId) -> (opt ProviderView) query;
+  isCallerAdmin: () -> (bool) query;
+  listCategories: () -> (vec Category) query;
+  listMyBookings: () -> (vec BookingRequest) query;
+  listProviderBookings: (providerId: ProviderId) ->
+   (vec BookingRequest) query;
+  listProviders: (filter: ProviderFilter) -> (vec ProviderView) query;
+  listReviewsForProvider: (providerId: ProviderId) -> (vec Review) query;
+  schema: () -> (text) query;
+  seedSampleData: () -> ();
+  updateCategory: (id: CategoryId, name: text) -> (opt Category);
+  updateMyProvider: (input: ProviderInput) -> (opt ProviderView);
+  updateProvider: (id: ProviderId, input: ProviderInput) ->
+   (opt ProviderView);
+  updateReview: (id: ReviewId, rating: nat, "text": text) -> (opt Review);
+}
